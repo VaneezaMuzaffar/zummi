@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zummi Navbar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Playfair Display', serif; }
+
+    header {
+      background: linear-gradient(to right, #2a1a14, #000);
+      color: white;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 100px;
+      margin-right: 10px;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      margin-left: auto;
+    }
+
+    nav {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav > ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+    }
+
+    nav ul li:hover > .dropdown,
+    nav ul li:hover > .mega-menu {
+      display: block;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #000;
+      padding: 10px 0;
+      display: none;
+      min-width: 180px;
+      z-index: 999;
+    }
+
+    .dropdown a {
+      padding: 10px 20px;
+      color: white;
+      display: block;
+    }
+
+    .mega-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: orange;
+      padding: 30px 40px;
+      justify-content: center;
+      gap: 30px;
+      z-index: 100;
+      width: max-content;
+      border-radius: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mega-menu .item {
+      width: 200px;
+      text-align: center;
+    }
+
+    .mega-menu .item img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .show-mega {
+      display: flex !important;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: beige;
+    }
+
+    .social-icons a {
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .social-icons a i {
+  color: white; /* Or any color you want */
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover i {
+  color: orange; /* On hover */
+}
+
+
+    .side-social .fa-facebook-f { color: #3b5998; }
+    .side-social .fa-twitter { color: #00acee; }
+    .side-social .fa-instagram { color: #e1306c; }
+    .side-social .fa-linkedin-in { color: #0077b5; }
+
+    .btn-red {
+      background: red;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url('./assets/banner.jpg') no-repeat center center/cover;
+      height: 90vh;
+      color: white;
+      position: relative;
+      padding: 50px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .hero-content {
+      max-width: 700px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .hero p {
+      font-size: 16px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .hero .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .hero .btns button {
+      padding: 12px 20px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btns a:hover i,
+    .side-social a:hover i {
+      opacity: 0.8;
+      transform: scale(1.1);
+      transition: 0.3s;
+      color: orange;
+    }
+
+    .explore-btn { background: red; color: white; }
+    .discover-btn { background: transparent; border: 1px solid white; color: white; }
+
+    .hero .side-social {
+      position: absolute;
+      top: 50%;
+      right: 190px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 80px;
+    }
+
+    .side-social a {
+      font-size: 18px;
+    }
+
+    /* Mobile styles */
+    @media screen and (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        width: 100%;
+        order: 3;
+      }
+
+      nav ul {
+        flex-direction: column;
+        background: #2a1a14;
+        width: 100%;
+        display: none;
+        padding: 20px;
+      }
+
+      nav.active ul {
+        display: flex;
+      }
+
+      .social-icons {
+        order: 2;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px 15px;
+      }
+
+      .hero h1 { font-size: 32px; }
+      .hero-content { width: 100%; }
+
+      .hero .btns {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hero .side-social {
+        position: static;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 20px;
+      }
+    }
+
+      /* Simply Flawless!
+    Deliciously Fresh &
+    Lush Flavors. */
+ .about-section {
+  position: relative;
+  padding: 100px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.about-container {
+  display: flex;
+  max-width: 1400px;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  gap: 40px;
+  margin-left: 140px;
+}
+
+/* Left Side */
+.about-left {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.restaurant-img {
+  width: 320px;
+  border-radius: 10px;
+}
+
+.burger-img {
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 200px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.since-text {
+  position: absolute;
+  bottom: -110px;
+  left: 0;
+  font-size: 42px;
+  color: orange;
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* Right Side */
+.about-right {
+  flex: 1;
+  max-width: 650px;
+}
+
+.badge {
+  background: #222;
+  padding: 6px 14px;
+  display: inline-block;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.about-right h2 {
+  font-size: 36px;
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+.about-right p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #ccc;
+  margin-top: 18px;
+}
+
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.read-more {
+  background: red;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.call-box {
+  font-size: 14px;
+}
+
+.call-number {
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+/* Floating Button */
+.fixed-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background: orange;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: bold;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Floating Vegetables */
+.floating {
+  position: absolute;
+  z-index: 1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.tomato {
+  top: 30px;
+  left: 50px;
+  width: 60px;
+  animation-delay: 0s;
+}
+
+.chili {
+  top: 30px;
+  right: 50px;
+  width: 70px;
+  animation-delay: 1s;
+}
+
+.leaf {
+  bottom: 20px;
+  left: 20px;
+  width: 80px;
+  animation-delay: 2s;
+}
+
+.lemon {
+  bottom: 20px;
+  right: 100px;
+  width: 50px;
+  animation-delay: 3s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-left, .about-right {
+    width: 100%;
+  }
+
+  .burger-img {
+    position: static;
+    margin-top: -60px;
+  }
+
+  .since-text {
+    position: static;
+    margin-top: 10px;
+    font-size: 32px;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+}
+
+/* MENU SECTION */
+.special-offers {
+  background: #000;
+  color: #fff;
+  padding: 50px 10%;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.menu-badge {
+  display: inline-block;
+  background: #222;
+  padding: 5px 15px;
+  font-size: 14px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.menu-tabs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap; /* allows wrapping on small screens */
+  justify-content: center;
+  gap: 30px;
+  border-bottom: 1px solid #555;
+  padding-bottom: 5px;
+  margin-bottom: 40px;
+}
+
+.menu-tabs li {
+  cursor: pointer;
+  padding-bottom: 5px;
+  position: relative;
+}
+
+.menu-tabs li.active {
+  color: orange;
+}
+
+.menu-tabs li.active::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 2px;
+  background: orange;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.menu-container {
+  display: flex;
+  gap: 40px;
+}
+
+.menu-column {
+  flex: 1;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px dashed #555;
+  padding: 15px 0;
+}
+
+.menu-item img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.item-info {
+  flex: 1;
+  text-align: left;
+}
+
+.item-info h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.item-info p {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.price {
+  font-weight: bold;
+  color: orange;
+}
+
+/* ------------------- */
+/* RESPONSIVENESS */
+/* ------------------- */
+@media (max-width: 992px) {
+  h2 {
+    font-size: 28px;
+  }
+  .menu-container {
+    flex-direction: column; /* stack columns vertically */
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-tabs {
+    gap: 15px;
+    font-size: 14px;
+  }
+  .menu-item img {
+    width: 60px;
+    height: 60px;
+  }
+  .item-info h4 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .special-offers {
+    padding: 30px 5%;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  .menu-tabs {
+    flex-direction: column; /* tabs in a column for small phones */
+    gap: 10px;
+  }
+  .menu-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .menu-item img {
+    margin-bottom: 10px;
+  }
+  .item-info {
+    text-align: left;
+  }
+}
+
+/* Chefs Section */
+.section-chefs {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.badge {
+  background: #2f2b2b;
+  display: inline-block;
+  padding: 6px 15px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+h2.section-title {
+  font-size: 28px;
+  margin-bottom: 40px;
+  letter-spacing: 1.2px;
+  color: #fff;
+}
+
+/* Carousel */
+.carousel {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Card Container */
+.chef-cards {
+  display: flex;
+  gap: 30px;
+  transition: transform 0.3s ease-in-out;
+  scroll-behavior: smooth;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.chef-cards::-webkit-scrollbar {
+  display: none;
+}
+
+/* Single Card */
+.chef-image-wrapper {
+  background: #1a1a1a;
+  padding: 30px 20px 100px;
+  border-radius: 10px;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 300px;
+  scroll-snap-align: start;
+  transition: transform 0.3s;
+}
+.chef-image-wrapper:hover {
+  transform: translateY(-5px);
+}
+
+.chef-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+  max-height: 280px;
+  display: block;
+  margin: 0 auto;
+}
+
+.chef-info {
+  background: #2f2b2b;
+  color: #fff;
+  padding: 15px 0;
+  margin-top: 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.chef-info:hover {
+  background-color: #c62828;
+}
+
+.chef-name {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.chef-role {
+  font-weight: 400;
+  font-size: 13px;
+  color: #ccc;
+  letter-spacing: 1.2px;
+}
+
+/* Dots */
+.dots {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #444;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+.dot.active {
+  background: transparent;
+  border-color: #c62828;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chef-cards {
+    gap: 20px;
+  }
+
+  .chef-image-wrapper {
+    max-width: 90%;
+  }
+}
+
+body {
+  background: #121212;
+  font-family: Arial, sans-serif;
+}
+
+/*  icon display*/
+
+
+.stats-section {
+  position: relative;
+  background: url('./assets/happy-client-bg.jpg') no-repeat center center/cover;
+  color: rgba(250, 248, 248, 0.637);
+  padding: 80px 20px;
+  text-align: center;
+  margin-top: 10%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.74); /* dark overlay for text readability */
+  z-index: 1;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  z-index: 2;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.stat-box {
+  flex: 1 1 200px;
+  min-width: 200px;
+  max-width: 250px;
+}
+
+.stat-box i {
+  font-size: 48px;
+  margin-bottom: 15px;
+  display: block;
+  color: orange;
+}
+
+.stat-box h2 {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.stat-box p {
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+/* footer*/
+.footer {
+  background: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-mockups {
+  position: relative;
+}
+.phone {
+  width: 180px;
+}
+.phone1 {
+  transform: rotate(-10deg);
+  position: relative;
+  left: 20px;
+}
+.phone2 {
+  transform: rotate(10deg);
+  position: relative;
+  left: -50px;
+}
+
+.footer-order {
+  max-width: 500px;
+  margin-right: 120px;
+  margin-top: 40px;
+}
+.footer-badge {
+  display: inline-block;
+  background: #ff6600;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+.store-buttons {
+  margin-top: 15px;
+}
+.store-buttons a {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-right: 10px;
+  background: #ff6600;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.rider {
+  position: relative;
+  width: 150px;
+  margin-top: 30px;
+}
+.rider img {
+  width: 100%;
+  animation: riderMove 6s linear infinite;
+}
+@keyframes riderMove {
+  0% { transform: translateX(120%); }
+  100% { transform: translateX(-120%); }
+}
+
+.floating {
+  position: absolute;
+}
+.floating-chili {
+  top: 10px;
+  right: 20%;
+}
+.floating-leaf {
+  bottom: 10px;
+  right: 5%;
+}
+
+.footer-bottom {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  padding: 40px;
+  background: #000;
+}
+
+.footer-column h3 {
+  margin-bottom: 15px;
+}
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-column ul li {
+  margin: 5px 0;
+}
+.footer-column ul li a {
+  color: white;
+  text-decoration: none;
+}
+.footer-column ul li a:hover {
+  color: #ff6600;
+}
+
+.recent-post {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.recent-post img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.zumii-logo {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin-right: 10px;
+  color: white;
+}
+.social-icons a:hover {
+  color: #ff6600;
+}
+
+.footer-credit {
+  text-align: center;
+  padding: 15px;
+  border-top: 1px solid #333;
+  font-size: 14px;
+}
+.footer-credit a {
+  color: white;
+  text-decoration: none;
+}
+.footer-credit a:hover {
+  color: #ff6600;
+}
+
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-mockups {
+    display: flex;
+    justify-content: center;
+  }
+  .phone {
+    width: 140px;
+  }
+  .footer-order {
+    margin-top: 20px;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="./assets/logo (1).png" alt="Zummi Logo">
+  </div>
+
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  <nav id="nav">
+    <ul>
+      <li>
+        <a href="#" id="home-link">HOME +</a>
+        <div class="mega-menu" id="mega-menu">
+          <a class="item" href="./Home1.html">
+            <img src="./assets/home1.PNG" alt="Home 1">
+            <p>HOME 01</p>
+          </a>
+          <a class="item" href="./Home2.html">
+            <img src="./assets/home1.PNG" alt="Home 2">
+            <p>HOME 02</p>
+          </a>
+          <a class="item" href="./Home3.html">
+            <img src="./assets/home1.PNG" alt="Home 3">
+            <p>HOME 03</p>
+          </a>
+        </div>
+      </li>
+      <li>
+        <a href="#">PAGES +</a>
+        <div class="dropdown">
+          <a href="#">About Us</a>
+          <a href="#">Food Menu</a>
+          <a href="#">Gallery</a>
+          <a href="#">Our Chefs</a>
+          <a href="#">Reservation</a>
+          <a href="#">404 Page</a>
+        </div>
+      </li>
+      <li>
+        <a href="#">SHOP +</a>
+        <div class="dropdown">
+          <a href="#">Shop</a>
+          <a href="#">Shop Details</a>
+          <a href="#">Wishlist</a>
+          <a href="#">Cart</a>
+          <a href="#">Checkout</a>
+        </div>
+      </li>
+      <li>
+        <a href="#">BLOG +</a>
+        <div class="dropdown">
+          <a href="#">Blog</a>
+          <a href="#">Blog Grid</a>
+          <a href="#">Blog Details</a>
+        </div>
+      </li>
+      <li><a href="#">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <div class="social-icons">
+    <a href="#"><i class="fa-solid fa-magnifying-glass"></i></i></a>
+    <a href="#"><i class="fa-solid fa-cart-plus"></i></i></i></a>
+    <button class="btn-red">FIND A TABLE</button>
+  </div>
+</header>
+
+<!-- hero section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>FOR THE ENJOYMENT OF SCRUMPTIOUS FARE.</h1>
+    <p>
+      Donec blandit massa at ex ullamcorper pellentesque. Vestibulum sit amet odio sit amet lacus vulputate luctus.
+      Quisque ut ultrices risus. Mauris mattis, lectus eget tincidunt maximus, urna fermentum enim mauris eu ante.
+    </p>
+    <div class="btns">
+      <button class="explore-btn">EXPLORE THE MAP</button>
+      <button class="discover-btn">DISCOVER MORE</button>
+    </div>
+  </div>
+  <div class="side-social">
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+</section>
+
+<section class="about-section">
+  <!-- Floating Vegetables -->
+  <img src="./assets/shape-1.png" alt="Tomato" class="floating tomato">
+  <img src="./assets/shape-2.png" alt="Chili" class="floating chili">
+  <img src="./assets/shape-3.png" alt="Leaf" class="floating leaf">
+  <img src="./assets/shape-4.png" alt="Lemon" class="floating lemon">
+
+  <div class="about-container">
+    <!-- Left Images -->
+    <div class="about-left">
+      <img src="./assets/about-us-1.jpg" alt="Restaurant" class="restaurant-img">
+      <img src="./assets/about-us-2.jpg" alt="Burger" class="burger-img">
+      <div class="since-text">SINCE 1854</div>
+    </div>
+
+    <!-- Right Content -->
+    <div class="about-right">
+      <div class="badge">OUR BACKGROUND</div>
+      <h2>SIMPLY FLAWLESS!<br>DELICIOUSLY FRESH & LUSH FLAVORS.</h2>
+      <p>Praesent varius erat ut pulvinar consectetur. Vivamus euismod luctus ligula, facilisis dignissim lacus. Maecenas eleifend rhoncus justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare vestibulum ex, a fermentum magna sodales nec.</p>
+      <p>Nunc vitae lacinia dui. Duis elementum ipsum quam, vel semper nisl venenatis eget. Ut rutrum dapibus dui quis tincidunt.</p>
+      <div class="buttons">
+        <button class="read-more">READ MORE</button>
+        <div class="call-box">CALL US:<span class="call-number"> +888 578 754 547</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Floating Circular Button -->
+<div class="fixed-button">14%</div>
+
+
+  
+  <section class="special-offers">
+  <div class="menu-header">
+    <div class="menu-badge">FROM OUR MENU</div>
+    <h2>OUR SPECIAL OFFERS</h2>
+    <ul class="menu-tabs">
+      <li class="active">MORNING</li>
+      <li>LUNCH</li>
+      <li>DINNER</li>
+      <li>FAST FOOD</li>
+      <li>BEVERAGE</li>
+    </ul>
+  </div>
+  <!-- menue -->
+  <div class="menu-container">
+    <!-- Left side -->
+    <div class="menu-column">
+      <div class="menu-item">
+        <img src="./assets/food-1.jpg" alt="Greek Salad">
+        <div class="item-info">
+          <h4>GREEK SALAD</h4>
+          <p>Proin cursus ante nec enim pellentesque</p>
+        </div>
+        <span class="price">$60</span>
+      </div>
+
+      <div class="menu-item">
+        <img src="./assets/food-2.jpg" alt="Herb Roast Chicken">
+        <div class="item-info">
+          <h4>HERB ROAST CHICKEN</h4>
+          <p>Proin cursus ante nec enim pellentesque</p>
+        </div>
+        <span class="price">$87</span>
+      </div>
+
+      <div class="menu-item">
+        <img src="./assets/food-3.jpg" alt="Grilled Cheese">
+        <div class="item-info">
+          <h4>GRILLED CHEESE</h4>
+          <p>Proin cursus ante nec enim pellentesque</p>
+        </div>
+        <span class="price">$34</span>
+      </div>
+
+      <div class="menu-item">
+        <img src="./assets/food-4.jpg" alt="Cherry Lemonade">
+        <div class="item-info">
+          <h4>CHERRY LEMONADE</h4>
+          <p>Proin cursus ante nec enim pellentesque</p>
+        </div>
+        <span class="price">$68</span>
+      </div>
+    </div>
+
+    <!-- Right side -->
+    <div class="menu-column">
+      <div class="menu-item">
+        <img src="./assets/food-5.jpg" alt="Penne Arrabbiata">
+        <div class="item-info">
+          <h4>PENNE ARRABBIATA</h4>
+          <p>Proin cursus ante nec enim pellentesque</p>
+        </div>
+        <span class="price">$47</span>
+      </div>
+
+      <div class="menu-item">
+        <img src="./assets/food-6.jpg" alt="Extra Veggie Pizza">
+        <div class="item-info">
+          <h4>EXTRA VEGGIE PIZZA</h4>
+          <p>Proin cursus ante nec enim pellentesque</p>
+        </div>
+        <span class="price">$53</span>
+      </div>
+
+      <div class="menu-item">
+        <img src="./assets/food-7.jpg" alt="Spaghetti Bolognese">
+        <div class="item-info">
+          <h4>SPAGHETTI BOLOGNESE</h4>
+          <p>Proin cursus ante nec enim pellentesque</p>
+        </div>
+        <span class="price">$37</span>
+      </div>
+
+      <div class="menu-item">
+        <img src="./assets/food-8.jpg" alt="Barley Soup">
+        <div class="item-info">
+          <h4>BARLEY SOUP</h4>
+          <p>Proin cursus ante nec enim pellentesque</p>
+        </div>
+        <span class="price">$65</span>
+      </div>
+    </div>
+  </div>
+</section>
+ <!-- chefs section-->
+  <section class="section-chefs" aria-label="Expert Chefs Carousel">
+
+  <div class="badge" aria-hidden="true">EXPERT CHEFS</div>
+  <h2 class="section-title">MEET OUR EXPERT CHEFS</h2>
+
+  <div class="carousel">
+    <div class="chef-cards" id="chefCards">
+      <div class="chef-card" tabindex="0">
+        <div class="chef-image-wrapper">
+          <img class="chef-image" src="./assets/expert-chef-1.png" alt="Fergus Douchebag" />
+          <div class="chef-info" role="button" tabindex="0" aria-label="Executive Chef Fergus Douchebag">
+            <div class="chef-name">FERGUS DOUCHEBAG</div>
+            <div class="chef-role">EXECUTIVE CHEF</div>
+          </div>
+        </div>
+      </div>
+      <div class="chef-card" tabindex="0">
+        <div class="chef-image-wrapper">
+          <img class="chef-image" src="./assets/expert-chef-2.png" alt="Ruud Van Driver" />
+          <div class="chef-info" role="button" tabindex="0" aria-label="Executive Chef Ruud Van Driver">
+            <div class="chef-name">RUUD VAN DRIVER</div>
+            <div class="chef-role">EXECUTIVE CHEF</div>
+          </div>
+        </div>
+      </div>
+      <div class="chef-card" tabindex="0">
+        <div class="chef-image-wrapper">
+          <img class="chef-image" src="./assets/expert-chef-3.png" alt="Fergus Douchebag Master Chef" />
+          <div class="chef-info" role="button" tabindex="0" aria-label="Master Chef Fergus Douchebag">
+            <div class="chef-name">FERGUS DOUCHEBAG</div>
+            <div class="chef-role">MASTER CHEF</div>
+          </div>
+        </div>
+      </div>
+      <div class="chef-card" tabindex="0">
+        <div class="chef-image-wrapper">
+          <img class="chef-image" src="./assets/expert-chef-1.png" alt="Chef Four" />
+          <div class="chef-info" role="button" tabindex="0" aria-label="Chef Four">
+            <div class="chef-name">CHEF FOUR</div>
+            <div class="chef-role">SOUS CHEF</div>
+          </div>
+        </div>
+      </div>
+      <div class="chef-card" tabindex="0">
+        <div class="chef-image-wrapper">
+          <img class="chef-image" src="./assets/expert-chef-3.png" alt="Chef Five" />
+          <div class="chef-info" role="button" tabindex="0" aria-label="Chef Five">
+            <div class="chef-name">CHEF FIVE</div>
+            <div class="chef-role">PASTRY CHEF</div>
+          </div>
+        </div>
+      </div>
+      <div class="chef-card" tabindex="0">
+        <div class="chef-image-wrapper">
+          <img class="chef-image" src="./assets/expert-chef-2.png" alt="Chef Six" />
+          <div class="chef-info" role="button" tabindex="0" aria-label="Chef Six">
+            <div class="chef-name">CHEF SIX</div>
+            <div class="chef-role">GRILL CHEF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dots" role="tablist" aria-label="Select Chef">
+    <button class="dot active" aria-selected="true" aria-controls="chefCards" aria-label="Show chef 1" data-index="0"></button>
+    <button class="dot" aria-selected="false" aria-controls="chefCards" aria-label="Show chef 2" data-index="1"></button>
+    <button class="dot" aria-selected="false" aria-controls="chefCards" aria-label="Show chef 3" data-index="2"></button>
+    <button class="dot" aria-selected="false" aria-controls="chefCards" aria-label="Show chef 4" data-index="3"></button>
+    <button class="dot" aria-selected="false" aria-controls="chefCards" aria-label="Show chef 5" data-index="4"></button>
+    <button class="dot" aria-selected="false" aria-controls="chefCards" aria-label="Show chef 6" data-index="5"></button>
+  </div>
+
+</section>
+<!-- icons display-->
+<section class="stats-section">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="stat-box">
+      <i class="fas fa-user-tie"></i>
+      <h2>420</h2>
+      <p>Professional Chefs</p>
+    </div>
+    <div class="stat-box">
+      <i class="fas fa-burger"></i>
+      <h2>320</h2>
+      <p>Items of Food</p>
+    </div>
+    <div class="stat-box">
+      <i class="fas fa-utensils"></i>
+      <h2>30+</h2>
+      <p>Experienced</p>
+    </div>
+    <div class="stat-box">
+      <i class="fas fa-pizza-slice"></i>
+      <h2>220</h2>
+      <p>Happy Customers</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <!-- Left: Mobile mockups -->
+    <div class="footer-mockups">
+      <img src="./assets/phone-1.png" alt="Mobile App 1" class="phone phone1">
+      <img src="./assets/phone-2.png" alt="Mobile App 2" class="phone phone2">
+    </div>
+
+    <!-- Right: Order text and buttons -->
+    <div class="footer-order">
+      <span class="footer-badge">TASTY MENU</span>
+      <h2>READY TO ORDER?</h2>
+      <p>
+        Praesent varius erat at pulvinar consectetur. Vivamus euismod luctus
+        ligula, facilisis dignissim lacus. Maecenas aliquet dolor a justo
+        maximus, at cursus nisl tempor.
+      </p>
+      <div class="store-buttons">
+        <a href="#" class="app-store">APP STORE</a>
+        <a href="#" class="google-play">GOOGLE PLAY</a>
+      </div>
+
+      <!-- Moving Rider -->
+      <div class="rider">
+        <img src="./assets/raider.png" alt="Delivery Rider">
+      </div>
+    </div>
+
+    <!-- Floating Vegetables -->
+    <img src="./assets/chilis.png" class="floating floating-chili" alt="Chili">
+    <img src="./assets/leaf.png" class="floating floating-leaf" alt="Leaf">
+  </div>
+
+  <!-- Bottom Footer -->
+  <div class="footer-bottom">
+    <div class="footer-column">
+      <img src="./assets/logo (1).png" alt="Zumii Logo" class="zumii-logo">
+      <p>
+        Morbi pharetra eros sed suscipit pellentesque. Nulla facilisi. Etiam
+        efficitur tincidunt purus.
+      </p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-column">
+      <h3>OUR MENU</h3>
+      <ul>
+        <li><a href="#">Breakfast</a></li>
+        <li><a href="#">Lunch</a></li>
+        <li><a href="#">Dinner</a></li>
+        <li><a href="#">Vegetable</a></li>
+        <li><a href="#">Korean Food</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>RESOURCES</h3>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Menu</a></li>
+        <li><a href="#">Pages</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Branch</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h3>RECENT POST</h3>
+      <div class="recent-post">
+        <img src="./assets/about-us-1.jpg" alt="Post 1">
+        <div>
+          <span>March 27, 2024</span>
+          <a href="#">Dining in Paris – Explore them in Town</a>
+        </div>
+      </div>
+      <div class="recent-post">
+        <img src="./assets/about-us-2.jpg" alt="Post 2">
+        <div>
+          <span>March 27, 2024</span>
+          <a href="#">Mouthwatering Recipes for Home Cooking</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-credit">
+    <p>© 2024 ZUMII ALL RIGHTS RESERVED BY SITE</p>
+    <p><a href="#">PRIVACY POLICY</a> | <a href="#">TERM OF SERVICE</a></p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('nav');
+    nav.classList.toggle('active');
+  }
+
+  document.getElementById('home-link').addEventListener('click', function (e) {
+    e.preventDefault();
+    document.getElementById('mega-menu').classList.toggle('show-mega');
+  });
+
+  document.addEventListener('click', function (e) {
+    const homeLink = document.getElementById('home-link');
+    const megaMenu = document.getElementById('mega-menu');
+    if (!homeLink.contains(e.target) && !megaMenu.contains(e.target)) {
+      megaMenu.classList.remove('show-mega');
+    }
+  });
+
+  // chefs js 
+   const chefCards = document.getElementById('chefCards');
+  const dots = document.querySelectorAll('.dot');
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const index = parseInt(dot.getAttribute('data-index'));
+      // Move carousel
+      chefCards.style.transform = `translateX(-${index * 100}%)`;
+
+      // Update active dot
+      dots.forEach(d => {
+        d.classList.remove('active');
+        d.setAttribute('aria-selected', 'false');
+      });
+      dot.classList.add('active');
+      dot.setAttribute('aria-selected', 'true');
+    });
+  });
+</script>
+</body>
+</html>
